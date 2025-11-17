@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "569320573971",
+    "project_id": "esame1-c71a6",
+    "storage_bucket": "esame1-c71a6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569320573971:android:a1daeb4c0c123b6ae883e6",
+        "android_client_info": {
+          "package_name": "it.progmob.esame1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs6WPyIfWwMmmm0oeWKYYtp2WFTNNxZn8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
