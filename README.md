@@ -10,4 +10,4 @@ COSA NON FUNZIONA
 - il l'ascolto degli audio registrati, ma credo sia solo un problema dell'emulatore del telefono
 - non sono riuscito a implementare (ne scaricando manualmente ne scaricando in automatico) TardosDSP
 
-[mockup]([url](https://www.figma.com/board/2nkUZBjo9LNbb2xGirAt2j/Concept-Map-Template--Copy-?node-id=0-1&p=f&t=RwNwWffF3ZKCT6OD-0))o
+([url](https://www.figma.com/board/2nkUZBjo9LNbb2xGirAt2j/Concept-Map-Template--Copy-?node-id=0-1&p=f&t=RwNwWffF3ZKCT6OD-0))o
