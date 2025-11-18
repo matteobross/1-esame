@@ -2,9 +2,8 @@
 login per firebase --> 1@gmail.com   password= 123456
 Link per [TardosDPS]([url](https://0110.be/posts/TarsosDSP_on_Android_-_Audio_Processing_in_Java_on_Android))   
 
-COSA FUNZIONAVA (prima di aggiungere l'"autodowload" di tardosDPS, che cmq ho cancellato ma continua a non funzionare)
-- login con firebase (autenticazione solo via mail senza verifica per rendermi più semplice tutto)
-- salvataggio di file di registrazione numerati
+COSA FUNZIONAVA
+- tutto fino all'activity "RithmActivity" perchè manca l'implementazione di TardosDPS
 
 COSA NON FUNZIONA
 - il l'ascolto degli audio registrati, ma credo sia solo un problema dell'emulatore del telefono
