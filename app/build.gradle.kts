@@ -49,8 +49,8 @@ dependencies {
 
     // Firebase
     implementation(libs.firebase.auth)
-  //  implementation("com.google.firebase:firebase-database:20.3.0")
-// Firebase BOM - gestisce automaticamente versioni compatibili
+  //  implementation("com.google.firebase:firebase-database:20.3.0")  non ho capito perchè non va bene
+// Firebase BOM,risolve gestisce automaticamente versioni compatibili
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
 
 // Firebase Auth
@@ -58,6 +58,9 @@ dependencies {
 
 // Firebase Realtime Database
     implementation("com.google.firebase:firebase-database")
+
+//teoricamente dovrei aggiungere anche implementation(files("libs/TarsosDSP-Android-latest-bin.jar"))
+    //ma poi non funziona, percorso : C:\Users\matte\Downloads\Kotlin-Android\Esame\1\1-esame\app\libs
 
     // Test
     testImplementation(libs.junit)
