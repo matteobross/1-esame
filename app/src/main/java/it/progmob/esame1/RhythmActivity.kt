@@ -1,5 +1,5 @@
 package it.progmob.esame1
-
+                                //FATTA DA CHATGPT PER CAPIRE COME FUNZIONA TarsosDSP
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper

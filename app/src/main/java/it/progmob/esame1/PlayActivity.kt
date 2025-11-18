@@ -29,7 +29,7 @@ class PlayActivity : AppCompatActivity() {
 
         // Mostra nome dell’ultimo file registrato
         if (filePath != null && File(filePath!!).exists()) {
-            txtTitle.text = "🎧 Ultimo file: ${File(filePath!!).name}"
+            txtTitle.text = "Ultima Rec: ${File(filePath!!).name}"
         } else {
             txtTitle.text = "Nessuna registrazione recente trovata"
         }

@@ -92,11 +92,11 @@ class NewRecActivity : AppCompatActivity() {
                 prepare()
                 start()
             }
-            Toast.makeText(this, "🎙️ Registrazione avviata!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Registrazione avviata!", Toast.LENGTH_SHORT).show()
             true
         } catch (e: IOException) {
             e.printStackTrace()
-            Toast.makeText(this, "Avvio registrazione fallito", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Avvio registrzione fallito", Toast.LENGTH_SHORT).show()
             mediaRecorder?.release()
             mediaRecorder = null
             false

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-feature android:name="android.hardware.microphone" android:required="true"/>
 
+    <uses-feature android:name="android.hardware.microphone" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -16,45 +16,40 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Esame1">
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:label="@string/title_activity_login"
-            android:theme="@style/Theme.Esame1">
+            android:label="@string/title_activity_login">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-
         </activity>
+
         <activity
             android:name=".RegisterActivity"
             android:exported="false"
-            android:label="@string/title_activity_register"
-            android:theme="@style/Theme.Esame1" />
+            android:label="@string/title_activity_register" />
+
         <activity
             android:name=".MainActivity"
-            android:exported="false"
-
-            android:theme="@style/Theme.Esame1" />
+            android:exported="false" />
 
         <activity
             android:name=".NewRecActivity"
-            android:exported="true"
-
-            android:theme="@style/Theme.Esame1"/>
+            android:exported="true" />
 
         <activity
-            android:name=".PlayActivity"
-          />
+            android:name=".PlayActivity" />
 
-        <activity android:name=".RhythmActivity"
+        <activity
+            android:name=".RhythmActivity"
             android:exported="false"
-            android:label="Ritmo Registrazione"/>
+            android:label="Ritmo Registrazione" />
 
     </application>
 
