@@ -59,8 +59,6 @@ dependencies {
 // Firebase Realtime Database
     implementation("com.google.firebase:firebase-database")
 
-//teoricamente dovrei aggiungere anche implementation(files("libs/TarsosDSP-Android-latest-bin.jar"))
-    //ma poi non funziona, percorso : C:\Users\matte\Downloads\Kotlin-Android\Esame\1\1-esame\app\libs
 
     // Test
     testImplementation(libs.junit)

@@ -8,6 +8,11 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+
+        maven {
+            name = "TarsosDSP repository"
+            url = uri("https://mvn.0110.be/releases")
+        }
     }
     dependencies {
         classpath("com.google.gms:google-services:4.4.2")

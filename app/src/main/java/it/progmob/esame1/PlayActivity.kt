@@ -53,16 +53,15 @@ class PlayActivity : AppCompatActivity() {
             val selectedFile = listView.adapter.getItem(position) as String
             val fullPath = "${externalCacheDir?.absolutePath}/$selectedFile"
 
-            val intent = Intent(this, RhythmActivity::class.java)
-            intent.putExtra("audioPath", fullPath)
-            startActivity(intent)
+
         }
 
     }
 
     private fun loadFileList() {
+        // ✔ CORREZIONE 2: ora filtra i file M4A corretti
         val files = externalCacheDir?.listFiles { file ->
-            file.name.endsWith(".m4a") || file.name.endsWith(".mp3")
+            file.name.endsWith(".m4a")
         }?.sortedByDescending { it.lastModified() }
 
         if (files.isNullOrEmpty()) {

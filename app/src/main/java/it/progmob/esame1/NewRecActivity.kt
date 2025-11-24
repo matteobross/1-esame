@@ -27,8 +27,6 @@ class NewRecActivity : AppCompatActivity() {
         val btnAscolto = findViewById<Button>(R.id.btnAscolto)
         val blinkAnimation = AnimationUtils.loadAnimation(this, R.anim.blink)
 
-        outputFile = "${externalCacheDir?.absolutePath}/registrazione.mp3"
-
         requestAudioPermission()
 
         btnRecord.setOnClickListener {
@@ -83,6 +81,10 @@ class NewRecActivity : AppCompatActivity() {
             return false
         }
 
+        // ✔ CORREZIONE 1: genera qui un nuovo file per ogni registrazione
+        val timestamp = System.currentTimeMillis()
+        outputFile = "${externalCacheDir?.absolutePath}/rec_$timestamp.m4a"
+
         return try {
             mediaRecorder = MediaRecorder().apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -103,6 +105,7 @@ class NewRecActivity : AppCompatActivity() {
         }
     }
 
+
     private fun stopRecording() {
         mediaRecorder?.apply {
             try {
@@ -113,8 +116,11 @@ class NewRecActivity : AppCompatActivity() {
             }
         }
         mediaRecorder = null
-        Toast.makeText(this, "💾 Registrazione salvata in: $outputFile", Toast.LENGTH_LONG).show()
+//ho aggiunto un toast solo per capire PERCHE NON MOSTRA LA REC
+        val f = File(outputFile)
+        Toast.makeText(this, "Saved → Exists=${f.exists()}  size=${f.length()} bytes", Toast.LENGTH_LONG).show()
     }
+
 
     override fun onStop() {
         super.onStop()
@@ -123,4 +129,5 @@ class NewRecActivity : AppCompatActivity() {
             isRecording = false
         }
     }
+
 }
