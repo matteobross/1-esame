@@ -1,91 +1,60 @@
 package it.progmob.esame1
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Bundle
-import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
-import java.io.IOException
 
 class NewRecActivity : AppCompatActivity() {
 
-    private var isRecording = false
-    private val RECORD_AUDIO_REQUEST_CODE = 101
     private var mediaRecorder: MediaRecorder? = null
+    private var isRecording = false
     private lateinit var outputFile: String
+
+    private lateinit var btnRecord: Button
+    private lateinit var btnAscolto: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_newrec)
 
-        val btnRecord = findViewById<Button>(R.id.btnRecord)
-        val btnAscolto = findViewById<Button>(R.id.btnAscolto)
-        val blinkAnimation = AnimationUtils.loadAnimation(this, R.anim.blink)
+        btnRecord = findViewById(R.id.btnRecord)
+        btnAscolto = findViewById(R.id.btnAscolto)
 
-        requestAudioPermission()
+        outputFile = "${externalCacheDir?.absolutePath}/recording_${System.currentTimeMillis()}.m4a"
 
+        // ----- BOTTONE REGISTRA -----
         btnRecord.setOnClickListener {
-            if (isRecording) {
-                stopRecording()
-                btnRecord.clearAnimation()
-                isRecording = false
-            } else {
-                if (startRecording()) {
-                    btnRecord.startAnimation(blinkAnimation)
-                    isRecording = true
-                }
-            }
+            if (!isRecording) startRecording()
+            else stopRecording()
         }
 
+        // ----- BOTTONE ASCOLTO -----
         btnAscolto.setOnClickListener {
-            if (isRecording) {
-                Toast.makeText(this, "Ferma la registrazione prima di ascoltare!", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
 
             val recordedFile = File(outputFile)
+
             if (!recordedFile.exists() || recordedFile.length() == 0L) {
                 Toast.makeText(this, "Nessuna registrazione disponibile", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+
             }
 
+            // Apri PlayActivity passando il file registrato
             val intent = Intent(this, PlayActivity::class.java)
             intent.putExtra("outputFile", outputFile)
             startActivity(intent)
         }
     }
 
-    private fun requestAudioPermission() {
-        if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), RECORD_AUDIO_REQUEST_CODE)
-        }
-    }
+    // -------------------------------------------------------
+    //              FUNZIONI DI REGISTRAZIONE
+    // -------------------------------------------------------
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == RECORD_AUDIO_REQUEST_CODE) {
-            if (!(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                Toast.makeText(this, "Permesso di registrazione negato!", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun startRecording(): Boolean {
-        if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            requestAudioPermission()
-            return false
-        }
-
-        // ✔ CORREZIONE 1: genera qui un nuovo file per ogni registrazione
-        val timestamp = System.currentTimeMillis()
-        outputFile = "${externalCacheDir?.absolutePath}/rec_$timestamp.m4a"
-
-        return try {
+    private fun startRecording() {
+        try {
             mediaRecorder = MediaRecorder().apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
                 setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
@@ -94,40 +63,40 @@ class NewRecActivity : AppCompatActivity() {
                 prepare()
                 start()
             }
-            Toast.makeText(this, "Registrazione avviata!", Toast.LENGTH_SHORT).show()
-            true
-        } catch (e: IOException) {
+
+            isRecording = true
+            btnRecord.text = "FERMA"
+            Toast.makeText(this, "Registrazione avviata", Toast.LENGTH_SHORT).show()
+
+        } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, "Avvio registrzione fallito", Toast.LENGTH_SHORT).show()
-            mediaRecorder?.release()
-            mediaRecorder = null
-            false
+            Toast.makeText(this, "Errore: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
-
 
     private fun stopRecording() {
-        mediaRecorder?.apply {
-            try {
+        try {
+            mediaRecorder?.apply {
                 stop()
                 release()
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
-        }
-        mediaRecorder = null
-//ho aggiunto un toast solo per capire PERCHE NON MOSTRA LA REC
-        val f = File(outputFile)
-        Toast.makeText(this, "Saved → Exists=${f.exists()}  size=${f.length()} bytes", Toast.LENGTH_LONG).show()
-    }
-
-
-    override fun onStop() {
-        super.onStop()
-        if (isRecording) {
-            stopRecording()
+            mediaRecorder = null
             isRecording = false
+            btnRecord.text = "REGISTRA"
+
+            Toast.makeText(this, "Registrazione salvata", Toast.LENGTH_SHORT).show()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Errore nello stop: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (isRecording) {
+            mediaRecorder?.stop()
+            mediaRecorder?.release()
+        }
+    }
 }

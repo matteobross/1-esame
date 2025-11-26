@@ -1,4 +1,5 @@
 package it.progmob.esame1
+
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -34,7 +35,7 @@ class PlayActivity : AppCompatActivity() {
             txtTitle.text = "Nessuna registrazione recente trovata"
         }
 
-        // Carica elenco di tutti i file nella cartella cache
+        // Carica elenco file
         loadFileList()
 
         btnPlayLast.setOnClickListener {
@@ -49,20 +50,29 @@ class PlayActivity : AppCompatActivity() {
             stopPlayback()
         }
 
+        //  Quando clicchi un file → apri RhythmActivity
         listView.setOnItemClickListener { _, _, position, _ ->
             val selectedFile = listView.adapter.getItem(position) as String
             val fullPath = "${externalCacheDir?.absolutePath}/$selectedFile"
 
-
+            val intent = Intent(this, RhythmActivity::class.java)
+            intent.putExtra("audioPath", fullPath)
+            startActivity(intent)
         }
-
     }
-
+//finestra per vedere i file, poi devo decidere il tipo adesso ci sono tutti
     private fun loadFileList() {
-        // ✔ CORREZIONE 2: ora filtra i file M4A corretti
         val files = externalCacheDir?.listFiles { file ->
-            file.name.endsWith(".m4a")
+            val name = file.name.lowercase()
+            name.endsWith(".m4a") ||
+                    name.endsWith(".mp3") ||
+                    name.endsWith(".wav") ||
+                    name.endsWith(".aac") ||
+                    name.endsWith(".ogg") ||
+                    name.endsWith(".flac") ||
+                    name.endsWith(".3gp")
         }?.sortedByDescending { it.lastModified() }
+
 
         if (files.isNullOrEmpty()) {
             Toast.makeText(this, "Nessuna registrazione trovata", Toast.LENGTH_SHORT).show()
@@ -84,7 +94,7 @@ class PlayActivity : AppCompatActivity() {
                 start()
                 Toast.makeText(this@PlayActivity, "▶️ Riproduzione: ${File(path).name}", Toast.LENGTH_SHORT).show()
                 setOnCompletionListener {
-                    Toast.makeText(this@PlayActivity, "✅ Riproduzione terminata", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PlayActivity, "✔ Riproduzione terminata", Toast.LENGTH_SHORT).show()
                     release()
                     mediaPlayer = null
                 }
@@ -100,7 +110,7 @@ class PlayActivity : AppCompatActivity() {
             if (isPlaying) {
                 stop()
                 release()
-                Toast.makeText(this@PlayActivity, "⏹️ Riproduzione fermata", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PlayActivity, "⏹ Riproduzione fermata", Toast.LENGTH_SHORT).show()
             }
         }
         mediaPlayer = null

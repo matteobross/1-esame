@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "it.progmob.esame1"
-    compileSdk = 36   // SDK stabile e supportato
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "it.progmob.esame1"
@@ -14,6 +14,8 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
+
+
     }
 
     buildTypes {
@@ -35,32 +37,22 @@ android {
         jvmTarget = "11"
     }
 
-    // Disattivato perché NON usi Compose
     buildFeatures {
         compose = false
     }
+
+    
 }
 
 dependencies {
 
-    // AndroidX e UI
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
 
-    // Firebase
-    implementation(libs.firebase.auth)
-  //  implementation("com.google.firebase:firebase-database:20.3.0")  non ho capito perchè non va bene
-// Firebase BOM,risolve gestisce automaticamente versioni compatibili
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
-
-// Firebase Auth
     implementation("com.google.firebase:firebase-auth")
-
-// Firebase Realtime Database
     implementation("com.google.firebase:firebase-database")
 
-
-    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
